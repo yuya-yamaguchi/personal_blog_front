@@ -7,28 +7,30 @@
     >
       RailsからAPIを取得する
     </button>
-    <div
-      v-for="(msg, i) in msgs"
-      :key="i"
-    >
-      {{ msg }}
+    <div v-for="(blog, i) in blogs" :key="i">
+      タイトル：{{ blog.title }}
+      本文：{{ blog.body }}
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+export type DataType = {
+  blogs: string[];
+}
+
 export default {
-  data () {
+  data(): DataType {
     return {
-      msgs: []
+      blogs: []
     }
   },
   methods: {
     getMsg () {
-      this.$axios.$get('/api/v1/hello')
+      this.$axios.$get('/api/v1/blogs')
         .then((res) => {
           console.log(res)
-          this.msgs.push(res)
+          this.blogs = res
         })
     }
   }
